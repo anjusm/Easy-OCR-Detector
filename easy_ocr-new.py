@@ -97,6 +97,9 @@ reader = load_model() #load model
 if image is not None:
 
     input_image = Image.open(image) #read image
+    input_image = np.array(input_image)
+    H, W = input_image.shape[0], input_image.shape[1]
+    input_image = cv2.resize(input_image, (612, 512))
     st.write("Original Image")
     st.image(input_image) #display image
     
