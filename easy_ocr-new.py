@@ -99,7 +99,7 @@ if image is not None:
     input_image = np.array(input_image)
     H, W = (input_image.shape[0]/2), (input_image.shape[1]/2)
     print(H, W)
-    input_image = cv2.resize(input_image, (H, W))
+    input_image = cv2.resize(input_image, ((input_image.shape[0]/2), (input_image.shape[1]/2)))
     st.write("Original Image")
     st.image(input_image) #display image
     
