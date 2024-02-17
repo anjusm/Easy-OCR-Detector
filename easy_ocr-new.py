@@ -97,16 +97,23 @@ if image is not None:
 
     input_image = Image.open(image) #read image
     input_image = np.array(input_image)
-    H, W = (input_image.shape[0]/2), (input_image.shape[1]/2)
-    print(H, W)
-    input_image = cv2.resize(input_image, ((input_image.shape[0]/2), (input_image.shape[1]/2)))
+
+    print('Original Image:', input_image.shape)
+    scale_percent = 50 # percent of the original size
+    width = int(input_image.shape[1] * scale_percent / 100)
+    height = int(input_image.shape[0] * scale_percent / 100)
+    dimension = (width, height)
+    # resize image
+    resized_image = cv2.resize(input_image, dimension, interpolation = cv2.INTER_AREA)
+    print('Resized Dimensions : ',resized_image.shape)
+
     st.write("Original Image")
-    st.image(input_image) #display image
+    st.image(resized_image) #display image
     
     ## Image Pre-processing
     # normalization
-    norm_img = np.zeros((input_image.shape[0], input_image.shape[1]))
-    norm_img = cv2.normalize(input_image, norm_img, 0, 255, cv2.NORM_MINMAX)
+    norm_img = np.zeros((resized_image.shape[0], resized_image.shape[1]))
+    norm_img = cv2.normalize(resized_image, norm_img, 0, 255, cv2.NORM_MINMAX)
     # convert to grayscale
     gray = cv2.cvtColor(norm_img, cv2.COLOR_BGR2GRAY) 
 
