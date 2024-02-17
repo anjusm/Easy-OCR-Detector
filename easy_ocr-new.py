@@ -68,7 +68,7 @@ def load_model():
     return reader 
 
 # Define the function to detect text in an image
-def detect_text(image, thre = 0):
+def detect_text(image, thre = 0.15):
     """Detects text in an image using EasyOCR.
 
     Args:
