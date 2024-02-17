@@ -63,9 +63,8 @@ def calculate_rotation_angle(bounding_boxes):
     average_angle = np.mean(angles)
     return math.degrees(average_angle)
 
-@st.cache_data 
 def load_model(): 
-    reader = ocr.Reader(['en'], gpu=False, model_storage_directory='.')
+    reader = ocr.Reader(['en'], gpu=True)
     return reader 
 
 # Define the function to detect text in an image
@@ -99,13 +98,13 @@ if image is not None:
     input_image = Image.open(image) #read image
     input_image = np.array(input_image)
     H, W = input_image.shape[0], input_image.shape[1]
+    print(H/4, W/4)
     input_image = cv2.resize(input_image, (612, 512))
     st.write("Original Image")
     st.image(input_image) #display image
     
     ## Image Pre-processing
     # normalization
-    input_image = np.array(input_image)
     norm_img = np.zeros((input_image.shape[0], input_image.shape[1]))
     norm_img = cv2.normalize(input_image, norm_img, 0, 255, cv2.NORM_MINMAX)
     # convert to grayscale
@@ -128,7 +127,7 @@ if image is not None:
         result2, bbox2 = detect_text(rotated_image, thre = 0.00001)
         
         st.write("The extracted texts: ")
-        st.write(result) # display text
+        st.write(result2) # display text
         
         # Write extracted text with bounding boxes in image
         for i in range(len(result2)):
